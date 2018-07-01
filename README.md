@@ -107,11 +107,11 @@ In the early 1980s I had a [Heathkit H89 computer](https://en.wikipedia.org/wiki
 
 Later in the 80s, I struggled to make sense of a file that was half ASCII and half EBCDIC.  That was a pain to sort out.  "Seeing" unprintable characters was only possible by displaying a hex dump of a file.
 
-Over the years, "bad" characters always unexpectedly popup when least expected, so charcount is a way to find them and fix them proactively before they unexpectedly cause problems.
+Over the years, "bad" characters always unexpectedly popup when least expected.  *Character count* is a way to find problems and fix them proactively before they unexpectedly cause problems.
 
-The *Archive* folder shows several early versions of the program.  The first from 1980 written in Microsoft FORTRAN was converted to UCSD Pascal (1982), which was convert to C (1990), ..., to Delphi (2001), ...  There may have been a PL/I version at some point.
+The *Archive* folder shows several early versions of the program.  The first from 1980 written in Microsoft FORTRAN was converted to UCSD Pascal (1982), which was converted to C (1990), ..., to Delphi (2001), ...  There may have been a PL/I version at some point.
 
-Did I mention that I've used character count to identify and remove tabs in files?  Tabs (hex 09) not displayed consistently by many programs (one or more spaces), do not help with alignment of fields of variable width, and many computer users cannot "see" them to fix problems in files.  Most users cannot tell if they have a tab character or a number of blanks.
+Did I mention that I've used *character count* to identify and remove tabs in files?  Tabs (hex 09) are not displayed consistently by many programs (variable number of spaces), do not help with alignment of fields of variable width, and many computer users cannot "see" tabs to fix problems in files.  Most users cannot tell if they have a tab character or a number of blanks.
 
 ## Building executables
 
@@ -120,6 +120,7 @@ Did I mention that I've used character count to identify and remove tabs in file
 Delphi source code was compiled with Embarcadero RAD Studio 10.2 on 2018-06-30 to create **CharCount.exe**.
 
 In Windows with Rtools installed, there is a gcc compiler for the command-line tools **charcnt** and **charcnt2**:  c:\Rtools\mingw_32\bin\gcc.exe
+
 With C:\Rtools\mingw_32\bin in the path, compile as follows:
 
 ```
@@ -136,5 +137,5 @@ make -f charcnt.mak
 make -f charcnt2.mak
 ```
 
-To annoy C experts who hated Delphi and Pascal in the early 1980s, I created the "legible.h" C macros to make C look like Pascal.  That was liked even less <g>.
+To annoy C experts who hated Delphi and Pascal in the early 1980s, I created the "legible.h" C macros to make C look like Pascal.  That was liked even less.
 
