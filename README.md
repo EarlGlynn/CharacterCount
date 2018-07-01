@@ -6,7 +6,7 @@ Compute frequency counts of all bytes in a file from hex 00 to hex FF
 
 Character count programs compute the frequency counts of all bytes in a file, with values from hex 00 to hex FF.
 
-The program is useful for determing if a file contains unusual or special ASCII characters, including
+The programs are useful for determining if a file contains unusual or special ASCII characters, including
 
   * control characters, hex 00 - hex 1F, including tabs (hex 09), and line endings (hex 0D and or hex 0A),
   * unusual or unexpected characters, especially hex 7F through hex FF,
@@ -26,11 +26,13 @@ Programs include
 
    * Command-line.  Extremely old C source code that still works.
 
-The base directory contains Windows executable programs from the souce code in the directories above.
+The base directory contains Windows executable programs from the source code in the directories above.
 
 Examples:
 
-** Windows **
+** Windows CharCount**
+
+Press **Select File** or drag and drop file on window for processing.
 
 ![MIMIC-III Lab Notes](graphics/CharCount-MIMIC-III-NoteEvents.jpg)
 
@@ -42,6 +44,8 @@ Possible problems:
   * Why are two hex 7F characters in the file?
 
 ** Command Line**
+
+**charcnt**
 
 ```
 charcnt charcnt.c
@@ -58,6 +62,18 @@ charcnt.c     1977 bytes     checksum:  129155
 ```
 
 A typical ASCII text file using hex 0A (LF) terminators, common with a Linux system.
+
+**charcnt2** returns the frequency matrix as one long vector with a final total bytes column (shown wrapped below):
+
+```
+charcnt2 charcnt.c
+charcnt.c,0,0,0,0,0,0,0,0,0,0,107,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,544,0,30,5,0,8,0,2,32,32,10,21,19,1,14,8,23,18,7,2,5,3,20,0,2,1,4,44,11,22,8,2,0,6,1
+5,11,21,43,17,14,9,25,0,0,4,11,39,17,1,0,26,7,17,1,0,7,2,3,0,36,9,36,0,2,0,39,7,31,20,41,26,10,19,58,34,5,28,15,39,30,15,7,43,12,51,12,7,14,23,3,0,2,0,2,0,0,0,0
+,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1977
+```
+
+These files can be collected and edited in Excel for comparison of a set at at time.
 
 ```
 charcnt charcnt.exe
@@ -93,7 +109,32 @@ Later in the 80s, I struggled to make sense of a file that was half ASCII and ha
 
 Over the years, "bad" characters always unexpectedly popup when least expected, so charcount is a way to find them and fix them proactively before they unexpectedly cause problems.
 
-THe *Archive* folder shows several early versions of the program.  The first from 1980 written in Microsoft FORTRAN was converted to UCSD Pascal (1982), which was convert to C (1990), ..., to Delphi (2001), ...  There may have been a PL/I version at some point.
+The *Archive* folder shows several early versions of the program.  The first from 1980 written in Microsoft FORTRAN was converted to UCSD Pascal (1982), which was convert to C (1990), ..., to Delphi (2001), ...  There may have been a PL/I version at some point.
 
 Did I mention that I've used character count to identify and remove tabs in files?  Tabs (hex 09) not displayed consistently by many programs (one or more spaces), do not help with alignment of fields of variable width, and many computer users cannot "see" them to fix problems in files.  Most users cannot tell if they have a tab character or a number of blanks.
+
+## Building executables
+
+** Windows **
+
+Delphi source code was compiled with Embarcadero RAD Studio 10.2 on 2018-06-30 to create **CharCount.exe**.
+
+In Windows with Rtools installed, there is a gcc compiler for the command-line tools **charcnt** and **charcnt2**:  c:\Rtools\mingw_32\bin\gcc.exe
+With C:\Rtools\mingw_32\bin in the path, compile as follows:
+
+```
+gcc charcnt.c  legible.h -ocharcnt
+gcc charcnt2.c legible.h -ocharcnt2
+```
+
+** Linux **
+
+**charcnt** is quite old, but it still compiles with the make file in CentOS:
+
+```
+make -f charcnt.mak
+make -f charcnt2.mak
+```
+
+To annoy C experts who hated Delphi and Pascal in the early 1980s, I created the "legible.h" C macros to make C look like Pascal.  That was liked even less <g>.
 
