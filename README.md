@@ -14,11 +14,11 @@ The programs are useful for determining if a file contains unusual or special AS
 
 Programs include
 
-  * **Delphi-Windows program**  Drag and drop file to process.
+  * **Delphi-Windows program**:  Drag and drop file to explore on **CharCount.exe** to process.
 
-  * **Command-Line programs**  For use in scripts.
+  * **Command-Line programs, charcnt and charcnt2**:  For use in scripts.
 
-  * **Archive**  Several historical versions of this program back to 1980.
+  * **Archive**  Several historical versions of this program back to 1980 (for my amusement).
 
 ## Directories
 
@@ -28,7 +28,7 @@ Programs include
 
 The base directory contains Windows executable programs from the source code in the directories above.
 
-Examples:
+## Examples
 
 **Windows CharCount**
 
