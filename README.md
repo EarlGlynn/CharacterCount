@@ -137,5 +137,5 @@ make -f charcnt.mak
 make -f charcnt2.mak
 ```
 
-To annoy C experts who hated Delphi and Pascal in the early 1980s, I created the "legible.h" C macros to make C look like Pascal.  That was liked even less.
+To annoy C experts who hated Delphi and Pascal in the early 1990s, I created the "legible.h" C macros to make C look like Pascal.  That was liked even less.
 
