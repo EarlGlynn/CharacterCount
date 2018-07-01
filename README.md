@@ -30,7 +30,7 @@ The base directory contains Windows executable programs from the source code in 
 
 Examples:
 
-** Windows CharCount**
+**Windows CharCount**
 
 Press **Select File** or drag and drop file on window for processing.
 
@@ -43,7 +43,7 @@ Possible problems:
   * What's the purpose for the 677 hex 13 and 49 hex 14 characters?
   * Why are two hex 7F characters in the file?
 
-** Command Line**
+**Command Line**
 
 **charcnt**
 
@@ -101,7 +101,7 @@ charcnt.exe    48984 bytes     checksum:  2450096
 A typical binary EXE file.
 
 
-##  Background
+## Background
 
 In the early 1980s I had a [Heathkit H89 computer](https://en.wikipedia.org/wiki/Zenith_Z-89) with a [H14 printer](https://www.manualslib.com/manual/901753/Heathkit-H14.html).  When I tried to print text files downloaded from various places, noise characters sometimes appeared because of noisy phone lines.  Printing files with the "wrong" noise characters would burn out the print head!  This was frustrating and expensive.  "charcount" was a way to find if a file was safe to print.  In the end, I gave the printer away because it was too unreliable.
 
@@ -115,7 +115,7 @@ Did I mention that I've used character count to identify and remove tabs in file
 
 ## Building executables
 
-** Windows **
+**Windows**
 
 Delphi source code was compiled with Embarcadero RAD Studio 10.2 on 2018-06-30 to create **CharCount.exe**.
 
@@ -127,7 +127,7 @@ gcc charcnt.c  legible.h -ocharcnt
 gcc charcnt2.c legible.h -ocharcnt2
 ```
 
-** Linux **
+**Linux**
 
 **charcnt** is quite old, but it still compiles with the make file in CentOS:
 
