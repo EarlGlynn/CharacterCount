@@ -1,0 +1,87 @@
+object FormCharCount: TFormCharCount
+  Left = 319
+  Top = 212
+  Width = 713
+  Height = 496
+  VertScrollBar.Range = 488
+  HorzScrollBar.Range = 708
+  ActiveControl = StringGrid
+  BorderIcons = [biSystemMenu, biMinimize]
+  Caption = 'Char Count'
+  Color = clBackground
+  Constraints.MinWidth = 250
+  Position = poDesktopCenter
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  TextWidth = 6
+  object StringGrid: TStringGrid
+    Left = 7
+    Top = 59
+    Width = 701
+    Height = 429
+    ColCount = 17
+    DefaultColWidth = 40
+    RowCount = 17
+    ScrollBars = ssNone
+    TabOrder = 0
+    OnDrawCell = StringGridDrawCell
+  end
+  object ButtonSelect: TButton
+    Left = 7
+    Top = 5
+    Width = 75
+    Height = 25
+    Caption = 'Select File'
+    TabOrder = 1
+    OnClick = ButtonSelectClick
+  end
+  object LabelInfo1: TLabel
+    Left = 87
+    Top = 4
+    Width = 61
+    Height = 13
+    Caption = 'xxx,xxx bytes'
+  end
+  object LabelInfo2: TLabel
+    Left = 87
+    Top = 21
+    Width = 98
+    Height = 13
+    Caption = 'CRC-32 = XXXXXXX'
+  end
+  object CheckBoxASCII: TCheckBox
+    Left = 7
+    Top = 36
+    Width = 138
+    Height = 17
+    Caption = 'Show ASCII character'
+    Checked = True
+    State = cbChecked
+    TabOrder = 4
+    OnClick = CheckBoxASCIIClick
+  end
+  object Button1: TButton
+    Left = 634
+    Top = 5
+    Width = 75
+    Height = 25
+    Anchors = [akRight]
+    Caption = 'Control Codes'
+    Font.CharSet = fcsLatin1
+    Font.Color = clGreen
+    Font.Height = 11
+    Font.Name = 'Microsoft Sans Serif'
+    Font.Pitch = fpVariable
+    Font.Style = []
+    Font.Weight = 40
+    ParentFont = False
+    TabOrder = 5
+    OnClick = Button1Click
+  end
+  object OpenDialog: TOpenDialog
+    Title = 'Open'
+    Left = 680
+    Top = 8
+  end
+end

@@ -1,0 +1,129 @@
+{BEGIN:  CHARCNT.TXT       10 26-Aug-84   156   512  Textfile }
+{$S+,I-,L-  PRINTER:}
+PROGRAM charcount;
+
+CONST
+  blksize = 511;
+
+VAR
+  blk_number :  INTEGER;        {block number relative to beginning of file}
+  blocks_read:  INTEGER;        {blocks read by BLOCKREAD intrinsic}
+  buffer     :  PACKED ARRAY[0..blksize] OF CHAR;
+  count      :  ARRAY[0..255] OF INTEGER;
+  file_in    :  STRING[23];     {xxxxxxx:xxxxxxxxxxxxxxx}
+  file_out   :  STRING[23];
+  i          :  INTEGER;
+  ipt        :  FILE;
+  j,k        :  INTEGER;
+  maxcol     :  ARRAY[0..15] OF INTEGER;
+  maxrow     :  ARRAY[0..15] OF INTEGER;
+  ordx       :  0..255;
+  prt        :  TEXT;
+  prttable   :  ARRAY[0..15,0..15] OF INTEGER;
+  temp       :  INTEGER;
+  x          :  CHAR;
+
+FUNCTION hex_digit(index:  INTEGER):  CHAR;
+  {This function returns a hex character '0'..'9' or 'A'..'F'
+  given an integer 0..15; a '?' for integers outside the 0..15 range.}
+BEGIN
+  IF   index IN [0..9]
+  THEN hex_digit := CHR( index + ORD('0') )
+  ELSE
+    IF   index IN [10..15]
+    THEN hex_digit := CHR( index + ORD('A') - 10 )
+    ELSE hex_digit := '?'
+END {hex_digit};
+
+BEGIN {charcount}
+
+  WRITELN ('Enter input filename (or EXIT):  ');
+  READLN (file_in);
+  IF   file_in = 'EXIT'
+  THEN EXIT (PROGRAM);
+  RESET (ipt,file_in);
+  temp := IORESULT;
+  IF   temp <> 0
+  THEN
+  BEGIN
+    WRITELN ('File ''',file_in,''' not found.  RC=',temp,'.');
+    EXIT (PROGRAM)
+  END;
+  DELETE (file_in,1,POS(':',file_in));
+
+  WRITELN ('Enter output filename (or EXIT):  ');
+  READLN (file_out);
+  IF   file_out = 'EXIT'
+  THEN EXIT (PROGRAM);
+  REWRITE (prt,file_out);
+
+  FOR i := 0 TO 255 DO
+    count[i] := 0;
+  blk_number := 0;
+  blocks_read := BLOCKREAD(ipt,buffer,1,blk_number);
+  WHILE (IORESULT=0) AND (blocks_read=1) DO
+  BEGIN
+    FOR i := 0 TO BLKSIZE DO BEGIN
+      x := buffer[i];
+      ordx := ORD(x);
+      count[ordx] := SUCC(count[ordx])
+    END;
+    blk_number := SUCC(blk_number);
+    blocks_read := BLOCKREAD(ipt,buffer,1,blk_number)
+  END {WHILE};
+
+  FOR i := 0 TO 15 DO BEGIN
+    maxcol[i] := 0;
+    maxrow[i] := 0
+  END;
+
+  k := 0;
+  FOR i := 0 TO 15 DO BEGIN
+    FOR j := 0 TO 15 DO BEGIN
+      temp := count[k+j];
+      prttable[i,j] := temp;
+      IF   temp > maxcol[j]
+      THEN maxcol[j] := temp;
+      IF   temp > maxrow[i]
+      THEN maxrow[i] := temp
+    END;
+    k := k + 16
+  END;
+
+  k := 3;
+  IF   blk_number > 25
+  THEN k := 2;
+  FOR j := 0 TO 15 DO
+    IF   maxcol[j] > 0
+    THEN maxcol[j] := k + TRUNC( log(maxcol[j])+0.001 )
+    ELSE maxcol[j] := 0;
+
+  WRITELN (prt,
+    'File ''',file_in,''' has ',blk_number,' ',blksize+1,'-byte blocks.');
+  WRITELN (prt);
+  WRITE (prt,'  ');
+  FOR j := 0 TO 15 DO
+    IF   maxcol[j] > 0
+    THEN WRITE (prt,'   ':maxcol[j]-1,hex_digit(j));
+  WRITELN (prt);
+  WRITE (prt,'  ');
+  FOR j := 0 TO 15 DO
+    IF   maxcol[j] > 0
+    THEN WRITE (prt,'   ':maxcol[j]-1,'-');
+  WRITELN (prt);
+
+  FOR i := 0 TO 15 DO
+    IF  maxrow[i] > 0
+    THEN BEGIN
+      WRITE (prt,hex_digit(i),'|');
+      FOR j := 0 TO 15 DO
+        IF   maxcol[j] > 0
+        THEN WRITE (prt,prttable[i,j]:maxcol[j]);
+      WRITELN (prt)
+    END;
+
+  CLOSE (prt,LOCK)
+
+END {PROGRAM charcount}.
+
+{END:  PGMS:CHARCOUNT.TEXT  }

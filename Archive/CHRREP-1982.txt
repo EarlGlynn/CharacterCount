@@ -1,0 +1,84 @@
+{BEGIN:  DK0:CHRREP.FOR    20-Jun-82 }
+C*
+C*  -CHRREP-   Replace characters.
+C*   Program   EFG, DPRA, 24 May 82.
+C*
+C*   The program will prompt for the name of the input and output files.
+C*   Up to 10 characters can be specified for replacement.  To allow both
+C*   printable and unprintable characters to be replaced, the decimal
+C*   equivalent of the ASCII character is specified for each replacement
+C*   character.
+C*
+      PROGRAM CHRREP
+      INTEGER*2 I,IN,N,OUT,COUNT(10)
+      BYTE      BUFIN(256),BUFOUT(256),FCHAR(10),TCHAR(10),
+     *  HEX1F(10),HEX2F(10),HEX1T(10),HEX2T(10)
+      LOGICAL*1 FLAGF,FLAGT
+      CALL DDNAME (1,8,' INPUT  ')
+      CALL DDNAME (1,9,' OUTPUT ')
+      WRITE (1,10)
+   10 FORMAT ('+Enter number of replacement characters:  (NN)  ')
+      READ (1,20) N
+   20 FORMAT (I2)
+      IF (N.GT.10) GO TO 190
+      WRITE (1,30)
+   30 FORMAT ('+Enter each character pair as a two pair of ',
+     *  'hex digits, e.g., 0A 0E'/  ' ')
+      DO 80 I=1,N
+       COUNT(I)=0
+   40  WRITE (1,50) I
+   50  FORMAT ('+Enter ''from'' and ''to'' character pair ',I2,':  ')
+       READ (1,60) HEX1F(I),HEX2F(I),HEX1T(I),HEX2T(I)
+   60  FORMAT (2A1,1X,2A1)
+       CALL BYTHEX (HEX1F(I),HEX2F(I),FCHAR(I),FLAGF)
+       CALL BYTHEX (HEX1T(I),HEX2T(I),TCHAR(I),FLAGT)
+       IF (.NOT. FLAGF) WRITE (1,70) HEX1F(I),HEX2F(I)
+       IF (.NOT. FLAGT) WRITE (1,70) HEX1T(I),HEX2T(I)
+   70  FORMAT ('+Invalid hex field ''',2A1,'''.'/' ')
+       IF (FLAGF .AND. FLAGT) GO TO 80
+       GO TO 40
+   80 CONTINUE
+      OUT=0
+   90 READ (8,END=140,ERR=210) BUFIN
+      DO 130 IN=1,256
+       DO 110 I=1,N
+        IF (BUFIN(IN).EQ.FCHAR(I)) GO TO 120
+  110  CONTINUE
+       OUT=OUT+1
+       BUFOUT(OUT)=BUFIN(IN)
+       IF (OUT.LT.256) GO TO 130
+       WRITE (9,ERR=230) BUFOUT
+       OUT=0
+       GO TO 130
+  120  COUNT(I)=COUNT(I)+1
+       OUT=OUT+1
+       BUFOUT(OUT)=TCHAR(I)
+       IF (OUT.LT.256) GO TO 130
+       WRITE (9,ERR=230) BUFOUT
+       OUT=0
+  130 CONTINUE
+      GO TO 90
+  140 IF (OUT.EQ.0) GO TO 160
+      OUT=OUT+1
+      DO 150 I=OUT,256
+       BUFOUT(I)=0
+  150 CONTINUE
+      WRITE (9,ERR=230) BUFOUT
+  160 ENDFILE 9
+      DO 180 I=1,N
+       WRITE (1,170) COUNT(I),HEX1F(I),HEX2F(I),HEX1T(I),HEX2T(I)
+  170  FORMAT (' Replaced ',I5,' X''',2A1,''' characters with X''',
+     *  2A1,''' characters.')
+  180 CONTINUE
+      STOP
+  190 WRITE (1,200)
+  200 FORMAT (' TOO MANY -- 10 IS MAX.')
+      STOP 16
+  210 WRITE (1,220)
+  220 FORMAT (' ERROR READING INPUT FILE.')
+      STOP 16
+  230 WRITE (1,240)
+  240 FORMAT (' ERROR WRITING OUTPUT FILE.')
+      STOP 16
+      END
+{END:    DK0:CHRREP.FOR   }

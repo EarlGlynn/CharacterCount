@@ -1,0 +1,50 @@
+{BEGIN:  DK0:CHRCNT.FOR    01-Feb-81 }
+C*
+C*  -CHRCNT-   Scan given file counting the number of each type of
+C*   Program   character.  EFG, DPRA, 25 Oct 80.  Modified 31 Jan 81.
+C*
+      PROGRAM   CHRCNT
+      INTEGER*2 COUNT(256),I,J,NUM,TOTAL
+      integer*1 ASCII,BLANK,BUFFER(256),HEX1,HEX2,OVLY(2)
+      BYTE      FILEID(17)
+      COMMON    /FILCOM/ FILEID
+      EQUIVALENCE (NUM,OVLY(1))
+      DATA      BLANK/' '/
+C
+      CALL DDNAME (1,8,' INPUT  ')
+      DO 10 I=1,256
+       COUNT(I)=0
+   10 CONTINUE
+   20 READ (8,END=40,ERR=90) BUFFER
+      DO 30 I=1,256
+       OVLY(1)=BUFFER(I)
+       OVLY(2)=0
+       NUM=NUM+1
+       COUNT(NUM)=COUNT(NUM)+1
+   30 CONTINUE
+      GO TO 20
+   40 WRITE (2,50) FILEID
+   50 FORMAT (' Character Distribution of File:  ',17A1//
+     *  6X,'HEX  ASCII  Count'/  6X,'---  -----  -----')
+      TOTAL=0
+      DO 70 I=1,256
+       IF (COUNT(I).EQ.0) GO TO 70
+       TOTAL=TOTAL+COUNT(I)
+       NUM=I-1
+       J=NUM
+       CALL HEXBYT (OVLY(1),ASCII,HEX1,HEX2)
+       IF (NUM.LT.32 .OR. NUM.GT.126) ASCII=BLANK
+       WRITE (2,60,ERR=110) HEX1,HEX2,ASCII,COUNT(I)
+   60  FORMAT (7X,2A1,4X,A1,3X,I6)
+   70 CONTINUE
+      WRITE (2,80,ERR=110) TOTAL
+   80 FORMAT (/12X,'TOTAL',I6)
+      STOP
+   90 WRITE (1,100)
+  100 FORMAT (' ERROR READING INPUT FILE.')
+      STOP 16
+  110 WRITE (1,120)
+  120 FORMAT (' ERROR WRITING PRINT FILE.')
+      STOP 16
+      END
+{END:    DK0:CHRCNT.FOR   }
