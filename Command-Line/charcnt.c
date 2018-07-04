@@ -1,4 +1,5 @@
-/* CHARCNT.  EFG, 8/18/90.  Rework of CHARCNT.PAS */
+/* CHARCNT.  efg, 1990-08-18.  Rework of CHARCNT.PAS   */
+/* Fix problem with WORD64 usage.  efg, 2018-07-04. */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,13 +25,13 @@ INTEGER main(INTEGER argc, STRING argv[])
     WORD64 vector[256];
     WORD64 matrix[16][16];
   } freq;
- 
+
   IF  argc IS_NOT 2
   THEN
     printf("Syntax:  charcnt filename.ext\n");
     exit(2)
   END
- 
+
   FOR  c = 0; c < 256; c++
   BEGIN
     freq.vector[c] = 0
@@ -41,20 +42,20 @@ INTEGER main(INTEGER argc, STRING argv[])
     fprintf(stderr,"Cannot open file \"%s\"\n",argv[1]);
     exit(3)
   END
- 
+
   WHILE  (c = getc(in))  IS_NOT  EOF
   BEGIN
     freq.vector[c]++;
     checksum += c
   END
   fclose (in);
- 
+
   FOR  j = 0; j < 16; j++
-  BEGIN 
+  BEGIN
     MaxCol[j] = 0;
     MaxRow[j] = 0
   END
- 
+
   FOR  i = 0; i < 16; i++
   BEGIN
     FOR  j = 0; j < 16; j++
@@ -64,7 +65,7 @@ INTEGER main(INTEGER argc, STRING argv[])
       total += freq.matrix[i][j]
     END
   END
- 
+
   printf("%s   %6ld bytes",argv[1],total);
   printf("     checksum:  %5u\n",checksum);
   printf("\n  ");
@@ -72,7 +73,7 @@ INTEGER main(INTEGER argc, STRING argv[])
   BEGIN
     width[j] = MaxCol[j]==0 ? 0:(char) 2+log10((double) MaxCol[j]);
     IF   width[j] > 0
-    THEN  
+    THEN
       printf("%*X",width[j],j);
     END
   END
@@ -86,7 +87,7 @@ INTEGER main(INTEGER argc, STRING argv[])
     END
   END
   printf("\n");
- 
+
   FOR  i = 0; i < 16; i++
   BEGIN
     IF  MaxRow[i] > 0
@@ -96,11 +97,11 @@ INTEGER main(INTEGER argc, STRING argv[])
       BEGIN
         IF   width[j] > 0
         THEN
-          printf("%*ld",width[j],freq.matrix[i][j])
+          printf("%*llu",width[j],freq.matrix[i][j])
         END
       END
       printf("\n")
-    END 
+    END
   END
 
   return (total IS 0);

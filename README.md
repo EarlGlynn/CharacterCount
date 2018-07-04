@@ -16,7 +16,7 @@ Programs include
 
   * **Delphi-Windows program**:  Drag and drop file to explore on **CharCount.exe** to process.
 
-  * **Command-Line programs, charcnt and charcnt2**:  For use in scripts.
+  * **C Command-Line programs, charcnt and charcnt2**:  For use in scripts.
 
   * **Archive**  Several historical versions of this program back to 1980 (for my amusement).
 
@@ -36,7 +36,7 @@ Press **Select File** or drag and drop file on window for processing.
 
 ![MIMIC-III Lab Notes](graphics/CharCount-MIMIC-III-NoteEvents.jpg)
 
-Possible problems:
+Possible problems to explore for this file:
 
   * Line ends predominantly LFs (nearly 92 million hex 0As), but why 1030 hex 0Ds?
   * Nearly 50,000 tabs are in the file.  Can they cause problems?
@@ -49,16 +49,17 @@ Possible problems:
 
 ```
 charcnt charcnt.c
-charcnt.c     1977 bytes     checksum:  129155
+charcnt.c     2135 bytes     checksum:  134503
 
-     0  1  2  3  4  5  6  7  8  9   A  B  C  D  E  F
-     -  -  -  -  -  -  -  -  -  -   -  -  -  -  -  -
- 0   0  0  0  0  0  0  0  0  0  0 107  0  0  0  0  0
- 2 544  0 30  5  0  8  0  2 32 32  10 21 19  1 14  8
- 3  23 18  7  2  5  3 20  0  2  1   4 44 11 22  8  2
- 4   0  6 15 11 21 43 17 14  9 25   0  0  4 11 39 17
- 5   1  0 26  7 17  1  0  7  2  3   0 36  9 36  0  2
- 6   0 39  7 31 20 41 26 10 19 58  34  5 28 15 39 30
+     0  1  2  3  4  5  6  7  8  9   A  B  C   D  E  F
+     -  -  -  -  -  -  -  -  -  -   -  -  -   -  -  -
+ 0   0  0  0  0  0  0  0  0  0  0 108  0  0 108  0  0
+ 2 544  0 30  5  0  8  0  2 32 32  12 21 20   5 16  8
+ 3  27 20  8  2  7  3 21  1  3  2   4 44 11  22  8  2
+ 4   0  6 15 11 22 42 17 13  9 25   0  0  4  11 39 18
+ 5   1  0 27  7 17  1  0  8  2  3   0 36  9  36  0  2
+ 6   0 40  8 31 19 45 28 13 20 60  34  5 30  16 39 31
+ 7  16  7 44 13 52 14  7 15 24  3   0  2  0   2  0  0
 ```
 
 A typical ASCII text file using hex 0A (LF) terminators, common with a Linux system.
@@ -67,35 +68,38 @@ A typical ASCII text file using hex 0A (LF) terminators, common with a Linux sys
 
 ```
 charcnt2 charcnt.c
-charcnt.c,0,0,0,0,0,0,0,0,0,0,107,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,544,0,30,5,0,8,0,2,32,32,10,21,19,1,14,8,23,18,7,2,5,3,20,0,2,1,4,44,11,22,8,2,0,6,1
-5,11,21,43,17,14,9,25,0,0,4,11,39,17,1,0,26,7,17,1,0,7,2,3,0,36,9,36,0,2,0,39,7,31,20,41,26,10,19,58,34,5,28,15,39,30,15,7,43,12,51,12,7,14,23,3,0,2,0,2,0,0,0,0
+charcnt.c,0,0,0,0,0,0,0,0,0,0,108,0,0,108,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,544,0,30,5,0,8,0,2,32,32,12,21,20,5,16,8,27,20,8,2,7,3,21,1,3,2,4,44,11,22,8,2,0,6
+,15,11,22,42,17,13,9,25,0,0,4,11,39,18,1,0,27,7,17,1,0,8,2,3,0,36,9,36,0,2,0,40,8,31,19,45,28,13,20,60,34,5,30,16,39,31,16,7,44,13,52,14,7,15,24,3,0,2,0,2,0,0,0
 ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1977
+,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2135
 ```
 
-These files can be collected and edited in Excel for comparison of a set at at time.
+This may help in creating file features for machine learning applications.
+
+The charccnt2 file can be collected and edited in Excel for comparison of a set at at time.
 
 ```
-charcnt charcnt.exe
-charcnt.exe    48984 bytes     checksum:  2450096
+D:\GitHub\CharacterCount\Command-Line>charcnt charcnt.exe
+charcnt.exe    48984 bytes     checksum:  2460263
 
        0    1   2   3    4   5   6   7   8   9  A   B   C   D   E    F
        -    -   -   -    -   -   -   -   -   -  -   -   -   -   -    -
- 0 20583  824 556 812  790 262 384  76 208  42 70  80 148  38 224  156
- 1   135   23  27  27  166  59   7  14 127  15 14  68 138  15  10    9
- 2   478    6  19   4  626  52  31  19 113  47 10  14  85 166 779   56
- 3   128   65  37  71  191  79 269  67 168  56 44  11  55  35   8   27
- 4   489  234  85 238  223 309  64 140  67 164 18  11 149 133 181  135
- 5   129   18 158 189  264 180  58  80 140  18 23  36  53  19  19 1524
- 6    48 1047 203 410  599 777 200 209  96 884 45  44 347 257 416  339
- 7   314   73 563 521 1209 192  95 107 198  84 39   2  44  12   4    6
- 8    58   33   8 200  116 111  22  13  43 187  2 145  22 101   4    3
- 9   263    3   4   6   27   4   6   7  14   6  5   5  23   5   5    0
- A    26   59   7  22   14   2   4   3   9   3  4   4  17   0   1    4
- B    21    4   7   2   28   2  77  17  28  10  5  14  31   6   5    7
- C   138   16  19 107   64  20  34 164  27  20 16  13  60   6   5    3
- D    70   10  20   9   24   2  40  22  43  11 10  19  25  22   7    4
- E    32    3  12   4   20  11   6   4 128  25  3  44  81   3   5    6
+ 0 20414  830 556 812  704 262 384  75 237 126 70  80 144  47 219  149
+ 1   155   22  27  29  162  58   9  11 124  15 16  29 156  41   6   12
+ 2   475    7  19   4  628  52  30  18 111  47 11   8  80 177 779   56
+ 3   139   65  37  71  195  79 270  66 170  60 45  11  41  36   8   28
+ 4   501  240  85 237  234 309  64 140  73 161 19  12 151 133 182  134
+ 5   121   18 156 189  269 180  97  96 138  18 23  37  68  19  19 1525
+ 6    60 1047 203 410  595 778 203 209  93 885 45  44 354 256 417  339
+ 7   313   73 566 523 1211 192  95 110 199  84 38   2  44  12   4    6
+ 8    55   33   8 201  104 112  22  13  47 196  3 156  19 101   6    3
+ 9   269    4   5   6   32   4   6   7   8   6  5   5  22   5   4    0
+ A    14   59   9  21   14   3   4   3  10   2  3   4  13   0   3    5
+ B    13    4   6   1   33   3  77  17  29   9  5  14  31   6   4    7
+ C   155   21  15 107   95  18  35 167  32  19 11  10  65   8   4    3
+ D    42    8  23  18   24   2   2   5  37  12 10  20  14  24   9    4
+ E    31    3  10   5   22  10   7   4 127  25  3  44  82   3   5    5
+ F    46    6   3   7   34   0  25  33  61   4 11  14  22  14  51  493
 ```
 
 A typical binary EXE file.
@@ -128,6 +132,8 @@ gcc charcnt.c  legible.h -ocharcnt
 gcc charcnt2.c legible.h -ocharcnt2
 ```
 
+The *sizes.c* program shows how to verify 32- and 64-bit integers, signed or unsigned, can be correctly displayed.
+
 **Linux**
 
 **charcnt** is quite old, but it still compiles with the make file in CentOS:
@@ -136,6 +142,5 @@ gcc charcnt2.c legible.h -ocharcnt2
 make -f charcnt.mak
 make -f charcnt2.mak
 ```
-
 To annoy C experts who hated Delphi and Pascal in the early 1990s, I created the "legible.h" C macros to make C look like Pascal.  That was liked even less.
 

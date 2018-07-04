@@ -2,6 +2,7 @@
 /* Legible Style for C/C++
  *
  * Copyright (C) 1992-1993, Earl F. Glynn, Overland Park, KS.
+ * Fixed WORD64 and INTEGER64 for Windows PCs, July 4, 2018.
  *
  */
 
@@ -24,24 +25,26 @@ enum    BOOLEAN  {
 
 #define CONSTANT  const
 
-typedef char               CHARACTER;
-typedef char *             STRING;
+typedef char                CHARACTER;
+typedef char *              STRING;
 
-typedef unsigned char      BYTE;           /* assume 8 bits/byte */
-typedef unsigned char *    BYTE_STRING;
+typedef unsigned char       BYTE;           /* assume 8 bits/byte */
+typedef unsigned char *     BYTE_STRING;
 
-                                      /* use WORD as synonym for unsigned int */
-typedef unsigned int       WORD;
-typedef unsigned short int WORD16;    /* portability between PCs and Suns */
-typedef unsigned       int WORD32;
-typedef unsigned long  int WORD64;
+                                           /* use WORD as synonym for unsigned int */
+typedef unsigned int        WORD;
+typedef unsigned short int  WORD16;        /* portability between PCs and Suns */
+typedef unsigned       int  WORD32;
+typedef unsigned long  long WORD64;
 
-typedef int                INTEGER;
-typedef short int          INTEGER16;
-typedef       int          INTEGER32;
-typedef long  int          INTEGER64;
+typedef int                 INTEGER;
+typedef short int           INTEGER16;
+typedef       int           INTEGER32;
+typedef long  long          INTEGER64;
 
-typedef double             REAL;
+typedef double              REAL;
+typedef double              REAL64;
+typedef long double         REAL96;
 
 #define OBJECT     class
 #define CONSTRUCTOR

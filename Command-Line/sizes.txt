@@ -1,0 +1,28 @@
+sizeof(BYTE):       1
+sizeof(CHARACTER):  1
+
+sizeof(REAL):       8
+sizeof(REAL64):     8
+sizeof(REAL96):     12
+
+sizeof(STRING):     4
+
+sizeof(INTEGER):    4
+sizeof(INTEGER16):  2
+sizeof(INTEGER32):  4
+sizeof(INTEGER64):  8
+
+sizeof(WORD):       4
+sizeof(WORD16):     2
+sizeof(WORD32):     4
+sizeof(WORD64):     8
+
+INTEGER   min/max:  -2147483648 to 2147483647
+INTEGER16 min/max:  -32768 to 32767
+INTEGER32 min/max:  -2147483648 to 2147483647
+INTEGER64 min/max:  -9223372036854775808 to 9223372036854775807
+
+WORD   max:  4294967295
+WORD16 max:  65535
+WORD32 max:  4294967295
+WORD64 max:  18446744073709551615
