@@ -66,8 +66,8 @@ INTEGER main(INTEGER argc, STRING argv[])
     END
   END
 
-  printf("%s   %6ld bytes",argv[1],total);
-  printf("     checksum:  %5u\n",checksum);
+  printf("%s   %llu bytes",argv[1],total);
+  printf("     checksum:  %lu\n",checksum);
   printf("\n  ");
   FOR  j = 0; j < 16; j++
   BEGIN
