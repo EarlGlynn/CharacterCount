@@ -2,10 +2,6 @@
 
 Utilities to read text or binary files to produce frequency counts of all characters in a file from hex 00 to hex FF.
 
-The summary often shows unexpected characters in files, especially in very large files.
-
-The result for a binary file will often show the full 16-by-16 matrix with counts for all 256 possible characters.
-
 ## Character Count programs
 
 Character count programs compute the frequency counts of all bytes in a file, with values from hex 00 to hex FF.
@@ -14,6 +10,7 @@ The programs are useful for determining if a file contains unusual or special AS
 
   * control characters, hex 00 - hex 1F, including tabs (hex 09), and line endings (hex 0D and or hex 0A),
   * unusual or unexpected characters, especially hex 7F through hex FF,
+  * line end characters,
   * field separators and whether the count matches expected number of fields.
 
 Programs include
@@ -26,7 +23,7 @@ Programs include
 
 ## Directories
 
-   * Delphi-Windows.  Delphi source code used with Embarcadero RAD Studio 10.2 on 2018-06-30 to create CharCount.exe.
+   * Delphi-Windows.  Delphi source code used with Embarcadero RAD Studio.
 
    * Command-line.  Extremely old C source code that still works.
 
@@ -54,11 +51,13 @@ Possible problems to explore for this file:
 
 Use **abc.txt** file from Data directory.
 
-Each line in an ASCII text file has a line-feed (x'0A') and carriage return (x'0D') at the end of each line. So, a simple text file with "ABC" also has two more characters if created with Windows.
+Each line in an ASCII text file has a carriage return (hex 0D) and/or a line-feed (hex 0A) at the end of each line.
 
-If created in Linux, the file has a line-feed (x'0A') at the end of each line.
+Windows text files end with two characters (hex 0D and hex 0A).
 
-Press the *Control Codes* button to see a description of most values under x'20'.
+If created in Linux, the file has only a line-feed (hex 0A) at the end of each line.
+
+Press the *Control Codes* button to see a description of most control character values under hex 20..
 
 To process a file, press the *Select File* button and select the file, or using Windows Explorer, simply drag and drop the file onto the middle of the window.
 
@@ -69,7 +68,9 @@ To process a file, press the *Select File* button and select the file, or using 
 
 Use **gi224589822.fasta** from Data directory.
 
-An ASCII text file with a DNA sequence in FASTA format might look like this, with many characters appearing in the file.  The file has 213 lines and was likely created in a Windows environment since the number of x'0A' and x'0D' characters are the same.
+An ASCII text file with a DNA sequence in FASTA format might look like this, with many characters appearing in the file, mostly due to the first header line.
+
+The file has 213 lines and was likely created in a Windows environment since the number of x'0A' and x'0D' characters are the same.
 
 By default, all characters in the file are processed, so the header line spoils the nucleotide counts.
 
@@ -77,20 +78,20 @@ By default, all characters in the file are processed, so the header line spoils 
 
 **Example 4:  Count nucleotides only in "fasta" file**
 
-The FASTA file in Example 3 consists of a "Defline" as the first line, followed by 212 rows of DNA sequences that consist of only As, Cs, Gs and Ts.  To ignore the defline and only count the sequence nucleotides, check the *Assume FASTA File* box before processing the file.
+The FASTA file in Example 3 consists of a "defline" as the first line, followed by 212 rows of DNA sequences that consist of only As, Cs, Gs and Ts.  To ignore the defline and only count the nucleotides, check the *Assume FASTA File* box before processing the file.
 
-Because of a minor bug, you must press "Select File" after checking the checkbox to process the file.
+Because of a minor bug, you must press "Select File" after checking the checkbox to process the file.  Drag and drop does not work with this option.
 
 ![Example 3](graphics/CharCount-FASTA-Nucleotide-Sequence.png)
 
-When the "Defline" is excluded, the file only contains A, C, G and T nucleotide characters.
+When the "Defline" is excluded, the file contains only A, C, G and T nucleotide characters.
 
 
 ### Command Line:  charcnt
 
 Windows or Linux if compiled correctly.
 
-**Example 4:  charcnt.c source code**
+**Example 5:  charcnt.c source code**
 
 ```
 charcnt charcnt.c
@@ -111,7 +112,7 @@ A typical ASCII text file using hex 0A (LF) terminators, common with a Linux sys
 
 ### Command Line:  charcnt2
 
-**Example 5:  charcnt.c source code (again)**
+**Example 6:  charcnt.c source code (again)**
 
 **charcnt2** returns the frequency matrix as one long vector with a final total bytes column (shown wrapped below):
 
@@ -127,7 +128,7 @@ This may help in creating file features for machine learning applications.
 
 The charcnt2 file can be collected and edited in Excel for comparison of a set at at time.
 
-**Example 6:  charcnt Windows executable**
+**Example 7:  charcnt Windows executable**
 
 ```
 D:\GitHub\CharacterCount\Command-Line>charcnt charcnt.exe
