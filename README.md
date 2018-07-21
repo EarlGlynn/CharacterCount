@@ -1,6 +1,6 @@
 # CharacterCount
 
-Utilities to read text or binary files to produce frequency counts of all characters in a file from hex 00 to hex FF.
+Utilities to read text or binary files to produce frequency counts of all characters in a file.
 
 ## Character Count programs
 
@@ -15,7 +15,7 @@ The programs are useful for determining if a file contains unusual or special AS
 
 Programs include
 
-  * **Delphi-Windows program**:  Drag and drop file to explore on **CharCount.exe** to process.
+  * **Delphi-Windows program**:  Drag and drop file on **CharCount.exe** to process.
 
   * **C Command-Line programs, charcnt and charcnt2**:  For use in scripts.
 
@@ -25,7 +25,7 @@ Programs include
 
    * Delphi-Windows.  Delphi source code used with Embarcadero RAD Studio.
 
-   * Command-line.  Extremely old C source code that still works.
+   * Command-line. Old C source code that still works in Windows or Linux.
 
 The base directory contains Windows executable programs from the source code in the directories above.
 
@@ -68,9 +68,9 @@ To process a file, press the *Select File* button and select the file, or using 
 
 Use **gi224589822.fasta** from Data directory.
 
-An ASCII text file with a DNA sequence in FASTA format might look like this, with many characters appearing in the file, mostly due to the first header line.
+An ASCII text file with a DNA sequence in FASTA format might look like this, with a variety of characters appearing in the file, mostly due to the first header line.
 
-The file has 213 lines and was likely created in a Windows environment since the number of x'0A' and x'0D' characters are the same.
+The file has 213 lines and was likely created in a Windows environment since the number of hex 0A and hex 0D characters are the same.
 
 By default, all characters in the file are processed, so the header line spoils the nucleotide counts.
 
@@ -108,7 +108,6 @@ charcnt.c     2135 bytes     checksum:  134503
  7  16  7 44 13 52 14  7 15 24  3   0  2  0   2  0  0
 ```
 
-A typical ASCII text file using hex 0A (LF) terminators, common with a Linux system.
 
 ### Command Line:  charcnt2
 
@@ -154,12 +153,12 @@ charcnt.exe    48984 bytes     checksum:  2460263
  F    46    6   3   7   34   0  25  33  61   4 11  14  22  14  51  493
 ```
 
-This is typical of the pattern for a binary EXE file.
+This is a typical pattern for a binary EXE file.
 
 
 ## Background
 
-In the early 1980s I had a [Heathkit H89 computer](https://en.wikipedia.org/wiki/Zenith_Z-89) with a [H14 printer](https://www.manualslib.com/manual/901753/Heathkit-H14.html).  When I tried to print text files downloaded from various places, noise characters sometimes appeared because of noisy phone lines.  Printing files with the "wrong" noise characters would burn out the print head!  This was frustrating and expensive.  "charcount" was a way to find if a file was safe to print.  In the end, I gave the printer away because it was too unreliable.
+In the early 1980s I had a [Heathkit H89 computer](https://en.wikipedia.org/wiki/Zenith_Z-89) with a [H14 printer](https://www.manualslib.com/manual/901753/Heathkit-H14.html).  When I tried to print text files downloaded from various places, random noise characters sometimes appeared because of noisy phone lines.  Printing files with the "wrong" noise characters would burn out the print head!  This was frustrating and expensive.  "charcount" was a way to find if a file was safe to print.  In the end, I gave the printer away because it was too unreliable.
 
 Later in the 80s, I struggled to make sense of a file that was half ASCII and half EBCDIC.  That was a pain to sort out.  "Seeing" unprintable characters was only possible by displaying a hex dump of a file.
 
