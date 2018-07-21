@@ -1,6 +1,10 @@
 # CharacterCount
 
-Compute frequency counts of all bytes in a file from hex 00 to hex FF
+Utilities to read text or binary files to produce frequency counts of all characters in a file from hex 00 to hex FF.
+
+The summary often shows unexpected characters in files, especially in very large files.
+
+The result for a binary file will often show the full 16-by-16 matrix with counts for all 256 possible characters.
 
 ## Character Count programs
 
@@ -30,7 +34,9 @@ The base directory contains Windows executable programs from the source code in 
 
 ## Examples
 
-**Windows CharCount**
+### Windows CharCount
+
+**Example 1:  MIMIC-III Clinical Data File**
 
 Press **Select File** or drag and drop file on window for processing.
 
@@ -43,9 +49,48 @@ Possible problems to explore for this file:
   * What's the purpose for the 677 hex 13 and 49 hex 14 characters?
   * Why are two hex 7F characters in the file?
 
-**Command Line**
 
-**charcnt**
+**Example 2:  Small text file**
+
+Use **abc.txt** file from Data directory.
+
+Each line in an ASCII text file has a line-feed (x'0A') and carriage return (x'0D') at the end of each line. So, a simple text file with "ABC" also has two more characters if created with Windows.
+
+If created in Linux, the file has a line-feed (x'0A') at the end of each line.
+
+Press the *Control Codes* button to see a description of most values under x'20'.
+
+To process a file, press the *Select File* button and select the file, or using Windows Explorer, simply drag and drop the file onto the middle of the window.
+
+![Example 2](graphics/CharCount-ABC-txt.png)
+
+
+**Example 3:  DNA "fasta" file**
+
+Use **gi224589822.fasta** from Data directory.
+
+An ASCII text file with a DNA sequence in FASTA format might look like this, with many characters appearing in the file.  The file has 213 lines and was likely created in a Windows environment since the number of x'0A' and x'0D' characters are the same.
+
+By default, all characters in the file are processed, so the header line spoils the nucleotide counts.
+
+![Example 3](graphics/CharCount-FASTA-raw.png)
+
+**Example 4:  Count nucleotides only in "fasta" file**
+
+The FASTA file in Example 3 consists of a "Defline" as the first line, followed by 212 rows of DNA sequences that consist of only As, Cs, Gs and Ts.  To ignore the defline and only count the sequence nucleotides, check the *Assume FASTA File* box before processing the file.
+
+Because of a minor bug, you must press "Select File" after checking the checkbox to process the file.
+
+![Example 3](graphics/CharCount-FASTA-Nucleotide-Sequence.png)
+
+When the "Defline" is excluded, the file only contains A, C, G and T nucleotide characters.
+
+
+### Command Line:  charcnt
+
+Windows or Linux if compiled correctly.
+
+**Example 4:  charcnt.c source code**
 
 ```
 charcnt charcnt.c
@@ -64,6 +109,10 @@ charcnt.c     2135 bytes     checksum:  134503
 
 A typical ASCII text file using hex 0A (LF) terminators, common with a Linux system.
 
+### Command Line:  charcnt2
+
+**Example 5:  charcnt.c source code (again)**
+
 **charcnt2** returns the frequency matrix as one long vector with a final total bytes column (shown wrapped below):
 
 ```
@@ -76,7 +125,9 @@ charcnt.c,0,0,0,0,0,0,0,0,0,0,108,0,0,108,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,54
 
 This may help in creating file features for machine learning applications.
 
-The charccnt2 file can be collected and edited in Excel for comparison of a set at at time.
+The charcnt2 file can be collected and edited in Excel for comparison of a set at at time.
+
+**Example 6:  charcnt Windows executable**
 
 ```
 D:\GitHub\CharacterCount\Command-Line>charcnt charcnt.exe
@@ -102,7 +153,7 @@ charcnt.exe    48984 bytes     checksum:  2460263
  F    46    6   3   7   34   0  25  33  61   4 11  14  22  14  51  493
 ```
 
-A typical binary EXE file.
+This is typical of the pattern for a binary EXE file.
 
 
 ## Background
@@ -121,7 +172,7 @@ Did I mention that I've used *character count* to identify and remove tabs in fi
 
 **Windows**
 
-Delphi source code was compiled with Embarcadero RAD Studio 10.2 on 2018-06-30 to create **CharCount.exe**.
+Delphi source code was compiled with Embarcadero RAD Studio 10.2 on 2018-07-20 to create **CharCount.exe**.
 
 In Windows with Rtools installed, there is a gcc compiler for the command-line tools **charcnt** and **charcnt2**:  c:\Rtools\mingw_32\bin\gcc.exe
 
@@ -136,11 +187,12 @@ The *sizes.c* program shows how to verify 32- and 64-bit integers, signed or uns
 
 **Linux**
 
-**charcnt** is quite old, but it still compiles with the make file in CentOS:
+**charcnt** is quite old, but still compiles with the make file in CentOS:
 
 ```
 make -f charcnt.mak
 make -f charcnt2.mak
 ```
+
 To annoy C experts who hated Delphi and Pascal in the early 1990s, I created the "legible.h" C macros to make C look like Pascal.  That was liked even less.
 

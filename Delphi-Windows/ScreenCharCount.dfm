@@ -2,7 +2,7 @@ object FormCharCount: TFormCharCount
   Left = 1643
   Top = 285
   BorderStyle = bsSingle
-  Caption = 'CharCount 2013'
+  Caption = 'CharCount'
   ClientHeight = 514
   ClientWidth = 714
   Color = clBtnFace
@@ -74,6 +74,42 @@ object FormCharCount: TFormCharCount
     ScrollBars = ssNone
     TabOrder = 0
     OnDrawCell = StringGridDrawCell
+    ColWidths = (
+      40
+      40
+      40
+      40
+      40
+      40
+      40
+      40
+      40
+      40
+      40
+      40
+      40
+      40
+      40
+      40
+      40)
+    RowHeights = (
+      24
+      24
+      24
+      24
+      24
+      24
+      24
+      24
+      24
+      24
+      24
+      24
+      24
+      24
+      24
+      24
+      24)
   end
   object ButtonControlCodes: TButton
     Tag = 20
